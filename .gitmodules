@@ -1,0 +1,3 @@
+[submodule "src/bf16-fma"]
+	path = src/bf16-fma
+	url = https://github.com/akankaan/bf16-fma.git
