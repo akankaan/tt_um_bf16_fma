@@ -1,56 +1,60 @@
 # Tiny Tapeout project information
 project:
-  title:        ""      # Project title
-  author:       ""      # Your name
-  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  ""      # One line description of what your project does
-  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
-  clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
+  title:        "BF16 Fused Multiply-Add (FMA)"
+  author:       "Kaan Akan"    
+  discord:      "" 
+  description:  "Single-rounded bfloat16 fused multiply-add (a*b + c) with a byte serial I/O interface"
+  language:     "SystemVerilog" 
+  clock_hz:     50000000       
 
-  # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
+  tiles: "1x1"
 
-  # Your top module name must start with "tt_um_". Make it unique by including your github username:
-  top_module:  "tt_um_example"
+  top_module:  "tt_um_akankaan_bf16_fma"
 
-  # List your project's source files here.
-  # Source files must be in ./src and you must list each source file separately, one per line.
-  # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
-    - "project.v"
+    - "tt_um_akankaan_bf16_fma.v"
+    - "bf16-fma/rtl/bf16_fma.sv"
+    - "bf16-fma/rtl/bf16_fma_io.sv"
+    - "bf16-fma/rtl/bf16_loader.sv"
+    - "bf16-fma/rtl/bf16_outputter.sv"
+    - "bf16-fma/rtl/bf16_fma_core.sv"
+    - "bf16-fma/rtl/bf16_decode_classify.sv"
+    - "bf16-fma/rtl/bf16_multiplier.sv"
+    - "bf16-fma/rtl/bf16_aligner.sv"
+    - "bf16-fma/rtl/bf16_addsub.sv"
+    - "bf16-fma/rtl/bf16_normalizer.sv"
+    - "bf16-fma/rtl/bf16_rounder.sv"
 
-# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
-# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]: "in_data[0]  (operand load, low byte)"
+  ui[1]: "in_data[1]  (operand load, low byte)"
+  ui[2]: "in_data[2]  (operand load, low byte)"
+  ui[3]: "in_data[3]  (operand load, low byte)"
+  ui[4]: "in_data[4]  (operand load, low byte)"
+  ui[5]: "in_data[5]  (operand load, low byte)"
+  ui[6]: "in_data[6]  (operand load, low byte)"
+  ui[7]: "in_data[7]  (operand load, low byte)"
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  uo[0]: "out_data[0] (result byte stream)"
+  uo[1]: "out_data[1] (result byte stream)"
+  uo[2]: "out_data[2] (result byte stream)"
+  uo[3]: "out_data[3] (result byte stream)"
+  uo[4]: "out_data[4] (result byte stream)"
+  uo[5]: "out_data[5] (result byte stream)"
+  uo[6]: "out_data[6] (result byte stream)"
+  uo[7]: "out_data[7] (result byte stream)"
 
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  uio[0]: "in_data[8]  (operand load, high byte and input only)"
+  uio[1]: "in_data[9]  (operand load, high byte and input only)"
+  uio[2]: "in_data[10] (operand load, high byte and input only)"
+  uio[3]: "in_data[11] (operand load, high byte and input only)"
+  uio[4]: "in_data[12] (operand load, high byte and input only)"
+  uio[5]: "in_data[13] (operand load, high byte and input only)"
+  uio[6]: "in_data[14] (operand load, high byte and input only)"
+  uio[7]: "in_data[15] (operand load, high byte and input only)"
 
 # Do not change!
 yaml_version: 6

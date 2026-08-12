@@ -6,7 +6,18 @@ SIM ?= icarus
 FST ?= -fst # Use more efficient FST format
 TOPLEVEL_LANG ?= verilog
 SRC_DIR = $(PWD)/../src
-PROJECT_SOURCES = project.v
+PROJECT_SOURCES  = tt_um_akankaan_bf16_fma.v
+PROJECT_SOURCES += bf16-fma/rtl/bf16_fma.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_fma_io.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_loader.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_outputter.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_fma_core.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_decode_classify.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_multiplier.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_aligner.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_addsub.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_normalizer.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_rounder.sv
 
 ifneq ($(GATES),yes)
 
