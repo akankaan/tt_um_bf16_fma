@@ -2,12 +2,12 @@
 project:
   title:        "BF16 Fused Multiply-Add (FMA)"
   author:       "Kaan Akan"    
-  discord:      "" 
+  discord:      "akakaa"
   description:  "Single-rounded bfloat16 fused multiply-add (a*b + c) with a byte serial I/O interface"
   language:     "SystemVerilog" 
   clock_hz:     50000000       
 
-  tiles: "1x2"
+  tiles: "2x2"
 
   top_module:  "tt_um_akankaan_bf16_fma"
 
