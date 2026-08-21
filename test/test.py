@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from pathlib import Path
+import sys
 
 import cocotb
 from cocotb.clock import Clock
@@ -9,19 +10,21 @@ from cocotb.triggers import ClockCycles, FallingEdge, RisingEdge
 
 # This testing mirrors the structure of my fma top file written
 # for cocotb and with the fixed load and output cycles
-VECTOR_DIR = Path(__file__).resolve().parents[1] / "src/bf16-fma/tb/vectors"
+SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "src/bf16-fma/scripts"
+sys.path.insert(0, str(SCRIPTS_DIR))
 
-def read_vectors(path):
-    vectors = []
-    with path.open() as vector_file:
-        for line in vector_file:
-            if line.strip():
-                vectors.append(tuple(int(field, 16) for field in line.split()))
-    return vectors
+import reference_model
+from vector_generation import fma_vectors
 
 
-async def run_vectors(dut, path):
-    vectors = read_vectors(path)
+def generate_vectors(vector_generator):
+    return [
+        (a, b, c, reference_model.fma_bf16_ref(a, b, c))
+        for a, b, c in vector_generator()
+    ]
+
+
+async def run_vectors(dut, name, vectors):
     operands = [operand for a, b, c, _ in vectors for operand in (a, b, c)]
 
     # Reset before each vector file
@@ -63,7 +66,7 @@ async def run_vectors(dut, path):
                             expected,
                         )
 
-    dut._log.info("%s: %d vectors", path.name, len(vectors))
+    dut._log.info("%s: %d vectors", name, len(vectors))
     return len(vectors), errors
 
 
@@ -77,8 +80,14 @@ async def test_project(dut):
     num_vectors = 0
     errors = 0
 
-    for filename in ("vec_special_fma.txt", "vec_directed_fma.txt"):
-        vectors_run, vector_errors = await run_vectors(dut, VECTOR_DIR / filename)
+    vector_sets = (
+        ("fma_special_vectors", fma_vectors.fma_special_vectors),
+        ("fma_directed_vectors", fma_vectors.fma_directed_vectors),
+    )
+
+    for name, vector_generator in vector_sets:
+        vectors = generate_vectors(vector_generator)
+        vectors_run, vector_errors = await run_vectors(dut, name, vectors)
         num_vectors += vectors_run
         errors += vector_errors
 
