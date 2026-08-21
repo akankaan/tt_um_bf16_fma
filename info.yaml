@@ -5,7 +5,7 @@ project:
   discord:      "akakaa"
   description:  "Single-rounded bfloat16 fused multiply-add (a*b + c) with a byte serial I/O interface"
   language:     "SystemVerilog" 
-  clock_hz:     50000000       
+  clock_hz:     133333333
 
   tiles: "2x2"
 
@@ -21,6 +21,7 @@ project:
     - "bf16-fma/rtl/bf16_decode_classify.sv"
     - "bf16-fma/rtl/bf16_multiplier.sv"
     - "bf16-fma/rtl/bf16_aligner.sv"
+    - "bf16-fma/rtl/bf16_addsub_prepare.sv"
     - "bf16-fma/rtl/bf16_addsub.sv"
     - "bf16-fma/rtl/bf16_normalizer.sv"
     - "bf16-fma/rtl/bf16_rounder.sv"

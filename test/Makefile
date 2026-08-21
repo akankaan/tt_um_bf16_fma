@@ -15,6 +15,7 @@ PROJECT_SOURCES += bf16-fma/rtl/bf16_fma_core.sv
 PROJECT_SOURCES += bf16-fma/rtl/bf16_decode_classify.sv
 PROJECT_SOURCES += bf16-fma/rtl/bf16_multiplier.sv
 PROJECT_SOURCES += bf16-fma/rtl/bf16_aligner.sv
+PROJECT_SOURCES += bf16-fma/rtl/bf16_addsub_prepare.sv
 PROJECT_SOURCES += bf16-fma/rtl/bf16_addsub.sv
 PROJECT_SOURCES += bf16-fma/rtl/bf16_normalizer.sv
 PROJECT_SOURCES += bf16-fma/rtl/bf16_rounder.sv
