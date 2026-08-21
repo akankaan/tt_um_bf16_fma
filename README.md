@@ -2,15 +2,13 @@
 
 # BFloat16 Fused Multiply-Add (FMA) Unit
 
-[workflow badges]
-
-![Post-route layout](docs/bf16_fma_layout.png)
-
-Short project summary
-
 ## What it does
 
 This project implements a pipelined Bfloat16 Fused Multiply-Add unit. It calculates `a * b + c` without rounding the intermediate product, and then rounds the final result to Bfloat16. The name "fused" comes from combining the multiplication and addition into one operation with one rounding step. This single rounding helps us preserve the product in full precision and improves the accuracy of the final result.
+
+## Placement 
+
+![Post-route layout](docs/bf16_fma_layout.png)
 
 ## How it works
 
@@ -23,7 +21,7 @@ My implementation has six internal pipeline stages to reduce the critical path d
 5) Normalize: Find leading one, shift result to the top of the datapath and adjust its exponent
 6) Round: Round the normalized result to Bfloat16 using round-to-nearest, ties-to-even (RNE), and output the final encoded value
 
-![Module breakdown in layout](docs/bf16_fma_module_breakdown_layout.png)
+![Module breakdown in layout](docs/bf16_fma_module_breakdown.png)
 
 ## I/O Bottleneck
 
